@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import { authCtx } from "../../components/store/auth-context";
@@ -34,7 +34,9 @@ const LoginPage = (props) => {
 
   /** 입력값이 유효하면 제출버튼 활성화시켜주는 핸들러 함수 */
   const changeButtonHandler = () => {
-    email.includes("@") && email.includes(".") && password.length >= 8
+    const emailRegExp =
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    emailRegExp.test(email) && password.length >= 8
       ? setButton(false)
       : setButton(true);
   };
@@ -57,7 +59,6 @@ const LoginPage = (props) => {
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
         setIsLoggedIn(true);
-        navigate("/");
       }
 
       // 아이디, 비밀번호가 일치하지 않는 경우
