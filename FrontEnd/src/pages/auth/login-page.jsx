@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import { authCtx } from "../../components/store/auth-context";
 import { useEffect } from "react";
 const LoginPage = (props) => {
-  // const [authData, setAuthData] = useRecoilState(authState);
-
+  // 로그인 여부 상태관리
   const { isLoggedIn, setIsLoggedIn } = useContext(authCtx);
-
+  // 이메일 입력 상태관리
   const [email, setEmail] = useState("");
+  // 패스워드 입력 상태관리
   const [password, setPassword] = useState("");
+  // 로그인 버튼 상태관리
   const [button, setButton] = useState(true);
 
   const navigate = useNavigate();
-  const { state } = useLocation();
 
-  // 아이디 입력값 업데이트 핸들러
+  /** 이메일 입력값 업데이트 핸들러 함수 */
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
   };
@@ -27,23 +27,25 @@ const LoginPage = (props) => {
     }
   }, [isLoggedIn, navigate]);
 
-  // 비밀번호 입력값 업데이트 핸들러
+  /** 비밀번호 입력값 업데이트 핸들러 함수 */
   const pwdInputHandler = (e) => {
     setPassword(e.target.value);
   };
 
-  // 유효성 검사 통과시 로그인 버튼 활성화
+  /** 입력값이 유효하면 제출버튼 활성화시켜주는 핸들러 함수 */
   const changeButtonHandler = () => {
-    email.includes("@") && email.includes(".") && password.length >= 8
+    const emailRegExp =
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    emailRegExp.test(email) && password.length >= 8
       ? setButton(false)
       : setButton(true);
   };
 
-  // 로그인이 되었을 경우 메인 페이지로 이동 핸들러
-  // 아이디, 비밀번호 일치 여부 확인 핸들러
+  /** 로그인이 되었을 경우 메인 페이지로 이동 핸들러 함수 */
   const loginSubmitHandler = async (e) => {
     e.preventDefault();
     try {
+      // 서버에 입력한 email, password를 보내서 토큰 받아옴
       const response = await axios.post(
         "http://34.22.85.44:5000/api/users/login",
         {
@@ -53,16 +55,14 @@ const LoginPage = (props) => {
       );
       const token = response.data.userToken;
 
+      // 아이디, 비밀번호가 일치해서 토큰이 정상적으로 발급된 경우 로그인 진행
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
         setIsLoggedIn(true);
+      }
 
-        if (state) {
-          navigate(state);
-        } else {
-          navigate("/");
-        }
-      } else {
+      // 아이디, 비밀번호가 일치하지 않는 경우
+      else {
         alert("이메일이나 비밀번호가 틀렸습니다.");
         return;
       }
