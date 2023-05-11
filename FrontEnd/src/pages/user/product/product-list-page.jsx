@@ -18,7 +18,7 @@ const ProductListPage = () => {
   const categoryPrice1 = useParams().price_1;
   const categoryPrice2 = useParams().price_2;
 
-  const { data, isLoading, isError, error } = useQuery(
+  const { data, isLoading, error } = useQuery(
     ["products", categoryName, categoryPrice1, categoryPrice2],
     () => {
       if (categoryPrice2) {
