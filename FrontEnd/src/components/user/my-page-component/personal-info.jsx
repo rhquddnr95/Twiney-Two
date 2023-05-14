@@ -1,11 +1,15 @@
 import { useQuery } from "react-query";
 import { getUserDataByToken } from "../../../api/api-auth";
 
+/** 개인정보 조회 페이지 컴포넌트 */
 const PersonalInfo = () => {
+
+  //useQuery 로 로딩, 데이터, 에러 관련 핸들링
   const { data, isLoading, isError, error } = useQuery(
     ["auth"],
     async () => await getUserDataByToken()
   );
+
   return (
     <>
       {isLoading ? (
