@@ -25,9 +25,7 @@ const SignUpPage = () => {
 
   // 유효성 검사 상태값 세팅
   const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-  const [isPhone, setIsPhone] = useState(false);
 
   /** 이름 입력값 업데이트 핸들러 */
   const nameInputHandler = (e) => {
@@ -56,10 +54,8 @@ const SignUpPage = () => {
     setPassword(currentPassword);
     if (currentPassword.length < 8) {
       setPasswordMessage("비밀번호를 8자리 이상 입력해주세요😅");
-      setIsPassword(false);
     } else {
       setPasswordMessage("사용 가능한 비밀번호 입니다😆");
-      setIsPassword(true);
     }
   };
 
@@ -124,9 +120,8 @@ const SignUpPage = () => {
   const emailRegExp =
     /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
   const signupButton = !(
-    emailRegExp.test(email) &&
-    password.length >= 8 &&
-    password === passwordConfirm &&
+    isEmail &&
+    isPasswordConfirm &&
     address1.trim() !== "" &&
     address2.trim() !== "" &&
     phoneNumber.trim() !== ""
