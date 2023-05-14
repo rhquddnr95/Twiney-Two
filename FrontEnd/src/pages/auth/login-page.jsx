@@ -20,6 +20,7 @@ const LoginPage = (props) => {
     setEmail(e.target.value);
   };
 
+  // 로그인 완료하면 메인페이지로 이동
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
@@ -40,7 +41,7 @@ const LoginPage = (props) => {
       : setButton(true);
   };
 
-  /** 로그인이 되었을 경우 메인 페이지로 이동 핸들러 함수 */
+  /** 아이디, 비밀번호 일치하는 경우 로그인 완료 핸들러 함수 */
   const loginSubmitHandler = async (e) => {
     e.preventDefault();
     try {
