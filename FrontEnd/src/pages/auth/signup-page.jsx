@@ -1,45 +1,40 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PopupDom from "../../components/user/my-page-component/post-popup/popup-dom";
 import SignupOrderPostCode from "./signup-order-post-code";
 
-const SignUpPage = (props) => {
-  // 초기값 세팅
+const SignUpPage = () => {
+  const navigate = useNavigate();
+
+  // 폼 입력 초기값 세팅
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   // 오류 전달을 위한 상태값 세팅
   const [emailMessage, setEmailMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
-
-  // 오류 메시지 상태 저장
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // 유효성 검사
+  // 유효성 검사 상태값 세팅
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
 
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const navigate = useNavigate();
-
-  // 이름 입력값 업데이트 핸들러
+  /** 이름 입력값 업데이트 핸들러 */
   const nameInputHandler = (e) => {
     setName(e.target.value);
   };
 
-  // 아이디 입력값 업데이트 핸들러
+  /** 이메일 입력값 업데이트 핸들러 */
   const emailInputHandler = (e) => {
     const currentEmail = e.target.value;
     setEmail(currentEmail);
@@ -55,7 +50,7 @@ const SignUpPage = (props) => {
     }
   };
 
-  // 비밀번호 입력값 업데이트 핸들러
+  /** 비밀번호 입력값 업데이트 핸들러 */
   const pwdInputHandler = (e) => {
     const currentPassword = e.target.value;
     setPassword(currentPassword);
@@ -68,7 +63,7 @@ const SignUpPage = (props) => {
     }
   };
 
-  // 비밀번호 확인 입력값 업데이트 핸들러
+  /** 비밀번호 확인 입력값 업데이트 핸들러 */
   const pwdCheckInputHandler = (e) => {
     const currentPasswordConfirm = e.target.value;
     setPasswordConfirm(currentPasswordConfirm);
@@ -79,10 +74,9 @@ const SignUpPage = (props) => {
       setPasswordConfirmMessage("똑같은 비밀번호를 입력했습니다👏🏻");
       setIsPasswordConfirm(true);
     }
-    setPasswordCheck(e.target.value);
   };
 
-  // 주소 입력값 업데이트 핸들러
+  /** 주소 입력값 업데이트 핸들러 */
   const addressInputHandler = (e) => {
     if (e.target.id === "address1") {
       setAddress1(e.target.value);
@@ -92,7 +86,7 @@ const SignUpPage = (props) => {
     }
   };
 
-  // 휴대폰 번호 업데이트 핸들러
+  /** 휴대폰 번호 업데이트 핸들러 */
   const PhoneNumberChangeHandler = (e) => {
     const currentPhone = e.target.value;
     setPhoneNumber(currentPhone);
@@ -107,22 +101,7 @@ const SignUpPage = (props) => {
     }
   };
 
-  // 유효성 검사 통과시 회원가입 버튼 활성화
-  // 1) 아이디 형식이 이메일
-  // 2) 비밀번호 8자 이상
-  // 3) 비밀번호와 비밀번호 확인 입력값 일치
-  const emailRegExp =
-    /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-  const signupButton = !(
-    emailRegExp.test(email) &&
-    password.length >= 8 &&
-    passwordRef.current.value === passwordConfirmRef.current.value &&
-    address1.trim() !== "" &&
-    address2.trim() !== "" &&
-    phoneNumber.trim() !== ""
-  );
-
-  // 회원가입 후 회원가입 완료 페이지로 이동 핸들러
+  /** 회원가입 후 서버에 데이터 보낸 후 완료 페이지로 이동 핸들러 */
   const signupSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -137,17 +116,21 @@ const SignUpPage = (props) => {
     }
   };
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  // 팝업창 닫기
-  const closePostCode = () => {
-    setIsPopupOpen(false);
-  };
-
-  // 팝업창 열기
-  const openPostCode = () => {
-    setIsPopupOpen(true);
-  };
+  // 유효성 검사 통과시 회원가입 버튼 활성화
+  // 1) 아이디 형식이 이메일
+  // 2) 비밀번호 8자 이상
+  // 3) 비밀번호와 비밀번호 확인 입력값 일치
+  // 4) 그외 이름, 핸드폰번호, 주소칸 모두 입력해야함
+  const emailRegExp =
+    /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+  const signupButton = !(
+    emailRegExp.test(email) &&
+    password.length >= 8 &&
+    password === passwordConfirm &&
+    address1.trim() !== "" &&
+    address2.trim() !== "" &&
+    phoneNumber.trim() !== ""
+  );
 
   return (
     <>
@@ -224,7 +207,6 @@ const SignUpPage = (props) => {
               placeholder="비밀번호 (8자 이상 입력해주세요)"
               value={password}
               onChange={pwdInputHandler}
-              ref={passwordRef}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[5px]
                 focus:outline-[#AA7373] focus:outline-[2px]"
@@ -240,11 +222,10 @@ const SignUpPage = (props) => {
           <span className="text-[16px] mb-[5px]">비밀번호 확인</span>
           <input
             type="password"
-            name="passwordCheck"
+            name="passwordConfirm"
             placeholder="비밀번호를 한 번 더 입력해주세요"
-            value={passwordCheck}
+            value={passwordConfirm}
             onChange={pwdCheckInputHandler}
-            ref={passwordConfirmRef}
             className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px]  mb-[5px]
                 focus:outline-[#AA7373] focus:outline-[2px]"
@@ -291,16 +272,21 @@ const SignUpPage = (props) => {
                 <button
                   class="bg-[#7B4848] rounded-[10px] w-[100px] h-[45px] text-[#FFFFFF]"
                   type="button"
-                  onClick={openPostCode}
+                  onClick={() => {
+                    setIsPopupOpen(true);
+                  }}
                 >
                   우편번호 찾기
                 </button>
               </div>
               <div id="popupDom">
-                {isPopupOpen && ( // 클릭해서 true면 팝업 띄움.
+                {isPopupOpen && (
                   <PopupDom>
                     <SignupOrderPostCode
-                      onClose={closePostCode} //팝업닫음.
+                      // 팝업 닫음
+                      onClose={() => {
+                        setIsPopupOpen(false);
+                      }}
                       setFullAddress={setAddress1}
                     />
                   </PopupDom>
