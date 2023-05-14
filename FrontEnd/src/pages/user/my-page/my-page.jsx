@@ -1,10 +1,12 @@
-import MyPageNav from "../../../components/user/my-page-component/my-page-nav";
 import { Outlet } from "react-router-dom";
 import { useQuery } from "react-query";
-
 import { Link } from "react-router-dom";
 import { getUserDataByToken } from "../../../api/api-auth";
-const MyPage = () => {
+import MyPageNav from "../../../components/user/my-page-component/my-page-nav";
+
+/** 마이페이지 컴포넌트*/
+const MyPage = () => { 
+  //토큰으로 받은 유저 데이터를 authData 에 가져옴
   const { data: authData } = useQuery(["auth"], () => getUserDataByToken());
 
   return (

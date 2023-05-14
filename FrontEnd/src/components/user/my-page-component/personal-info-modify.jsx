@@ -6,61 +6,68 @@ import { patchUserId } from "../../../api/api-users";
 import { useQuery, useQueryClient } from "react-query";
 import { getUserDataByToken } from "../../../api/api-auth";
 
+/** 개인정보수정 컴포넌트*/
 const PersonalInfoModify = () => {
+
   const { data } = useQuery(["auth"], async () => await getUserDataByToken());
-
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-
   const [pwd, setPwd] = useState("");
   const [pwdCheck, setPwdCheck] = useState("");
   const [addressDetail, setAddressDetail] = useState(data.address2);
   const [tel, setTel] = useState(data.phoneNumber);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [fullAddress, setFullAddress] = useState(data.address1);
+  const navigate = useNavigate();
+
+  /** 비밀번호 핸들러*/
   const pwdChangeHandler = (e) => {
-    // 비번 재설정
     const val = e.target.value;
     setPwd(val);
   };
+
+  /** 비밀번호 확인 핸들러*/
   const pwdCheckChangeHandler = (e) => {
-    // 비번 재설정 확인
     const val = e.target.value;
     setPwdCheck(val);
   };
+
+  /** 상세주소 핸들러*/
   const addressDetailChangeHandler = (e) => {
     //상세주소
     const val = e.target.value;
     setAddressDetail(val);
   };
+
+  /** 전화번호 핸들러*/
   const telInputHandler = (e) => {
     const val = e.target.value;
+    // tel 길이 유효성검사 11자 이하
     if (tel.length > 11) {
-      // tel 길이 11이하로
       alert(` 11자리 이하로 입력하세요. `);
       setTel(""); //tel 초기화
       return;
     }
+    // 숫자만 입력 확인
     if (isNaN(Number(val))) {
-      // 숫자 입력 확인
       alert(` '-'없이 숫자만 입력해 주세요.`);
       setTel(""); //tel 초기화
       return;
     }
     setTel(val);
   };
-  // 팝업창 열기
+
+  /** 팝업창 열기*/
   const openPostCode = () => {
     setIsPopupOpen(true);
   };
 
-  // 팝업창 닫기
+  /** 팝업창 닫기*/
   const closePostCode = () => {
     setIsPopupOpen(false);
   };
 
+  /** 수정완료 핸들러*/
   const modifySuccessHandler = async () => {
-    // 수정완료 버튼 핸들러
 
     // button 클릭시 비밀번호 재설정 <-> 비밀번호 확인 일치 && 연락처 형식 맞으면 main-page로 이동
     if (
@@ -76,8 +83,8 @@ const PersonalInfoModify = () => {
       alert(`비밀번호를 8자리 이상 입력하세요.`);
       return;
     }
+    //비밀번호 비교
     if (pwd === pwdCheck) {
-      //비밀번호 비교
       try {
         const result = await patchUserId(pwd, fullAddress, addressDetail, tel);
         console.log(result);
@@ -98,6 +105,7 @@ const PersonalInfoModify = () => {
 
   return (
     <>
+      {/* 데이터가 있으면 (로그인 되어있으면) 랜더링 */}
       {data ? (
         <div className=" flex justify-center items-center ">
           <div className="w-[80%] h-[80%] ">
