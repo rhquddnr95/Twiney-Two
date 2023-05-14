@@ -20,6 +20,7 @@ const Withdrawl = () => {
   const { setIsLoggedIn, setIsAdmin } = useContext(authCtx);  
   const navigate = useNavigate();
 
+  /** 탈퇴사유 내용수정 핸들러 (api를 를통해 database에 보내는 작업 추가사항)*/ 
   const contentChangeHandler = (e) => {
     const val = e.target.value;
     setContent(val);
