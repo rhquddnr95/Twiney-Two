@@ -1,8 +1,10 @@
-const SignUpCompletePage = (props) => {
-  // 회원가입 완료 페이지 넘어가자마자 스크롤 위로 올림
+const SignUpCompletePage = () => {
+  // 회원가입 완료 페이지 넘어가자마자 스크롤 최상단 이동
   window.scrollTo({
-    top: 0, // 제일 위로
-    behavior: "smooth", // 부드럽게 이동하는 속성
+    // 제일 위로
+    top: 0,
+    // 부드럽게 이동하는 속성
+    behavior: "smooth",
   });
 
   return (
