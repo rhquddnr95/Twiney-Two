@@ -1,15 +1,18 @@
 import { axiosBase } from "./api";
 
+/** 모든 주문정보 데이터 요청 */
 export const getAllOrders = async () => {
   const data = await axiosBase.get("api/orders");
   return data.data;
 };
 
+/** 주문자의 Email에 해당하는 주문정보 데이터 요청 */
 export const getOrdersByBuyerEmail = async (buyerEmail) => {
   const data = await axiosBase.get(`api/orders/${buyerEmail}`);
   return data.data;
 };
 
+/** 주문 번호에 해당하는 주문정보 데이터 요청 */
 export const getOrderByOrderIndex = async (OrderIndex) => {
   const data = await axiosBase.get(`api/orders/order/${OrderIndex}`);
   return data.data;
