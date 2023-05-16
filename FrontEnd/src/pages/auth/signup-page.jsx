@@ -90,10 +90,8 @@ const SignUpPage = () => {
 
     if (!phoneRegExp.test(currentPhone)) {
       setPhoneMessage("올바른 형식이 아닙니다😅");
-      setIsPhone(false);
     } else {
       setPhoneMessage("사용 가능한 번호입니다😆");
-      setIsPhone(true);
     }
   };
 

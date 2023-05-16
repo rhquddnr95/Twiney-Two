@@ -1,6 +1,6 @@
 import Product from "../../../components/user/product/product";
 import Pagination from "../../../components/user/product/pagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";
 import {
@@ -8,7 +8,6 @@ import {
   getProductsByCategoryPrice,
   getProductsByIsBest,
 } from "../../../api/api-product";
-import { useEffect } from "react";
 
 const ProductListPage = () => {
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
