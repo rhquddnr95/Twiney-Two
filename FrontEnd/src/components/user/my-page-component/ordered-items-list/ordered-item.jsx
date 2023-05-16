@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { getOrderByOrderIndex } from "../../../../api/api-order";
 import { getProductById } from "../../../../api/api-product";
 
 const OrderedItem = (props) => {
+  
   const productId = props.productId;
   const amount = props.amount;
 
