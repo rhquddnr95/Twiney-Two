@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import classes from "./category-modal-list.module.css";
 
 const CategoryModalList = (props) => {
   const { _id, name } = props.category;
@@ -19,8 +18,13 @@ const CategoryModalList = (props) => {
   }
   return (
     <>
-      <li key={_id} className={classes.category_modal_li}>
-        <Link to={linkTag}>{name}</Link>
+      <li key={_id} className="flex items-center justify-center h-[50px]">
+        <Link
+          to={linkTag}
+          className="flex items-center justify-center w-full h-full hover:text-[rgb(222, 147, 147)"
+        >
+          {name}
+        </Link>
       </li>
     </>
   );

@@ -18,6 +18,7 @@ export const getOrderByOrderIndex = async (OrderIndex) => {
   return data.data;
 };
 
+/** 주문 번호에 해당하는 주문 데이터 삭제 요청 */
 export const deleteOrderByOrderIndex = async (orderIndex) => {
   const result = await axiosBase.delete(`api/orders/admin/${orderIndex}`);
   return result;

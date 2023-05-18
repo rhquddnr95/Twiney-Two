@@ -1,38 +1,28 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useContext } from "react";
 import { authCtx } from "../../components/store/auth-context";
-import { useEffect } from "react";
-const LoginPage = (props) => {
-  // const [authData, setAuthData] = useRecoilState(authState);
+import axios from "axios";
 
-  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [button, setButton] = useState(true);
+const LoginPage = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx); // 로그인 여부 상태관리
+  const [email, setEmail] = useState(""); // 이메일 입력 상태관리
+  const [password, setPassword] = useState(""); // 패스워드 입력 상태관리
+  const [button, setButton] = useState(true); //
 
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  // 아이디 입력값 업데이트 핸들러
+  /** 이메일 입력값 업데이트 핸들러 함수 */
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
-
-  // 비밀번호 입력값 업데이트 핸들러
+  /** 비밀번호 입력값 업데이트 핸들러 함수 */
   const pwdInputHandler = (e) => {
     setPassword(e.target.value);
   };
 
-  // 유효성 검사 통과시 로그인 버튼 활성화
+  /** 입력값이 유효하면 제출버튼 활성화시켜주는 함수 */
   const changeButtonHandler = () => {
     email.includes("@") && email.includes(".") && password.length >= 8
       ? setButton(false)
@@ -71,6 +61,13 @@ const LoginPage = (props) => {
       return;
     }
   };
+
+  // 로그인된 상태면 메인페이지로 이동
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>

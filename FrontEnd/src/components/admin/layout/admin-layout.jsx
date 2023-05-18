@@ -24,30 +24,30 @@ const AdminLayout = (props) => {
 
   return (
     <div className="flex w-[1300px] min-h-screen m-auto border-x border-color2">
-      {!isAdmin ? (
+      {/* {!isAdmin ? (
         <div className="inline-block absolute top-[50%] left-[50%] tanslate-x-[-50%] tanslate-y-[-50%] flex flex-col justify-center items-center">
           <h1 className="font-bold">접근이 불가능한 페이지입니다.</h1>
           <Link className="underline" to="/">
             홈으로 이동
           </Link>
         </div>
-      ) : (
-        <>
-          <AdminMainNav />
-          <div className="w-full flex flex-col">
-            <div className="flex px-10 justify-between items-center h-[80px] border-b border-color2">
-              <h1 className="text-lg">{props.title}</h1>
-              <div className="flex gap-6">
-                <Link to="/">고객페이지</Link>
-                <Link to="/" onClick={logoutHandler}>
-                  로그아웃
-                </Link>
-              </div>
+      ) : ( */}
+      <>
+        <AdminMainNav />
+        <div className="w-full flex flex-col">
+          <div className="flex px-10 justify-between items-center h-[80px] border-b border-color2">
+            <h1 className="text-lg">{props.title}</h1>
+            <div className="flex gap-6">
+              <Link to="/">고객페이지</Link>
+              <Link to="/" onClick={logoutHandler}>
+                로그아웃
+              </Link>
             </div>
-            {props.children}
           </div>
-        </>
-      )}
+          {props.children}
+        </div>
+      </>
+      {/* )} */}
     </div>
   );
 };

@@ -84,6 +84,7 @@ export const deleteCheckedProductsById = async (checkedProductIds) => {
   return result;
 };
 
+/** 상품 등록 요청 */
 export const saveNewProduct = async (data) => {
   const {
     name,

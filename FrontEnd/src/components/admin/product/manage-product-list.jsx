@@ -11,14 +11,13 @@ const categories = ["레드와인", "화이트와인", "로제와인", "스파�
 const ManageProductList = (props) => {
   const products = props.products;
 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
   const [fileteredProducts, setFilteredProducts] = useState();
   const [checkedProductIds, setCheckedProductIds] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
-
   const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
 

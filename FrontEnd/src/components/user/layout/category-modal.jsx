@@ -19,7 +19,10 @@ const CategoryModal = (props) => {
   return (
     <>
       {isCategoryModal ? (
-        <div key={categories._id} className={classes.category_modal}>
+        <div
+          key={categories._id}
+          className="w-full absolute top-[56px] bg-white z-50 text-[16px]"
+        >
           <ul className="flex flex-col mb-[15px]">
             {categories.map((category) => {
               return (
