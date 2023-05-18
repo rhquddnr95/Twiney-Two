@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import CategoryModalList from "./category-modal-list";
 
-import classes from "./category-modal.module.css";
-
+/** 카테고리에 마우스 오버하면 뜨는 모달 컴포넌트 */
 const CategoryModal = (props) => {
   const { title, categories, _id } = props.categoryBundle;
   const [isCategoryModal, setIsCategoryModal] = useState(false);
   const categoryIndex = props.categoryIndex;
 
+  // 마우스 오버한 카테고리만 띄움
   useEffect(() => {
     if (_id === categoryIndex) {
       setIsCategoryModal(true);
