@@ -3,29 +3,14 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
 import { getAllCategories } from "../../../api/api-category";
+import { saveNewProduct } from "../../../api/api-product";
 
 const NewProduct = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [isImageModal, setIsImageModal] = useState(false);
-  const [imgFile, setImgFile] = useState("/defaultImage.jpg");
-  const imgRef = useRef();
-
   const { data: categoryBundle } = useQuery("categories", () =>
     getAllCategories()
   );
-
-  const categoriesByType = categoryBundle?.find(
-    (bundle) => bundle.title === "WINE"
-  ).categories;
-
-  const categoriesByCountry = categoryBundle?.find(
-    (bundle) => bundle.title === "COUNTRY"
-  ).categories;
-
   //각 폼데이터들 상태관리
   const [brand, setBrand] = useState("");
   const [name, setName] = useState("");
@@ -45,6 +30,21 @@ const NewProduct = () => {
   const [isBest, setIsBest] = useState(false);
   const [info, setInfo] = useState("");
   const [tags, setTags] = useState("");
+
+  const [isImageModal, setIsImageModal] = useState(false);
+  const [imgFile, setImgFile] = useState("/defaultImage.jpg");
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const imgRef = useRef();
+
+  const categoriesByType = categoryBundle?.find(
+    (bundle) => bundle.title === "WINE"
+  ).categories;
+
+  const categoriesByCountry = categoryBundle?.find(
+    (bundle) => bundle.title === "COUNTRY"
+  ).categories;
 
   // 각 input 온채인지 핸들러
   const inputChangeHandler = (e) => {
@@ -165,34 +165,8 @@ const NewProduct = () => {
       return;
     }
 
-    // 이부분에 axios 구현
-
     try {
-      const result = await axios.post("http://34.22.85.44:5000/api/products", {
-        name,
-        brand,
-        type,
-        country,
-        region,
-        imgUrl,
-        info,
-        price,
-        discountPrice,
-        saleCount: 0,
-        saleState: "판매중",
-        isPicked,
-        isBest,
-        inventory,
-        tags: arr.concat(tags),
-        features: {
-          sugar,
-          acidity,
-          tannic,
-          body,
-          alcoholDegree,
-        },
-      });
-      console.log(result);
+      await saveNewProduct();
       alert("상품이 성공적으로 추가되었습니다.");
       navigate("/manage/product_list");
       queryClient.invalidateQueries("products");

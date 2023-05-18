@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosBase } from "./api";
 
 /** 모든 상품 데이터 요청 */
@@ -77,9 +76,51 @@ export const changeSaleStateById = async (productId, saleState) => {
   return result;
 };
 
+/** 선택한 상품 ID의 삭제 요청 */
 export const deleteCheckedProductsById = async (checkedProductIds) => {
   const result = await checkedProductIds.forEach((id) => {
     axiosBase.delete(`api/products/${id}`);
+  });
+  return result;
+};
+
+/** 상품 등록 요청 */
+export const saveNewProduct = async (data) => {
+  const {
+    name,
+    brand,
+    type,
+    country,
+    region,
+    imgUrl,
+    info,
+    price,
+    discountPrice,
+    saleCount,
+    saleState,
+    isPicked,
+    isBest,
+    inventory,
+    tags,
+    features,
+  } = data;
+  const result = await axiosBase.post("api/products", {
+    name,
+    brand,
+    type,
+    country,
+    region,
+    imgUrl,
+    info,
+    price,
+    discountPrice,
+    saleCount,
+    saleState,
+    isPicked,
+    isBest,
+    inventory,
+    tags,
+    features,
   });
   return result;
 };
