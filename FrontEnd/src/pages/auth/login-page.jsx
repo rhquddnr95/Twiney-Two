@@ -55,6 +55,8 @@ const LoginPage = (props) => {
           password,
         }
       );
+
+      // access token
       const token = response.data.userToken;
 
       // 아이디, 비밀번호가 일치해서 토큰이 정상적으로 발급된 경우 로그인 진행
