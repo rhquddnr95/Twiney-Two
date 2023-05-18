@@ -6,7 +6,7 @@ import { getOrdersByBuyerEmail } from "../../../../api/api-order";
 import { useContext } from "react";
 import { authCtx } from "../../../store/auth-context";
 
-/** 주문내역 아이템 리스트를 보여주는 최상위 컴포넌트 */
+/** 주문내역 아이템들의 리스트를 보여주는 최상위 컴포넌트 */
 const OrderedItemsList = () => {
 
   // items의 페이지네이션 보여주는 items의 단위
