@@ -56,7 +56,7 @@ function App() {
                   element={<SignUpCompletePage />}
                 />
 
-                {/* 주문 페이지 라우터 */}
+                {/* 주문 페이지 라우터 이잉*/}
                 <Route path="/order" element={<OrderPage />} />
 
                 {/* 주문 완료 페이지 라우터 */}

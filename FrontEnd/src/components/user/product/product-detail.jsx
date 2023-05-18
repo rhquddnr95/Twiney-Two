@@ -40,7 +40,7 @@ const ProductDetail = (props) => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
   }, [cartData]);
 
-  // 마이너스 버튼 핸들러
+  /** 마이너스 버튼 핸들러 */
   const wineCountMinus = () => {
     if (amountRef.current.value < 2) {
       return;
