@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 
+/** 카테고리 모달내 카테고리 리스트 컴포넌트 */
 const CategoryModalList = (props) => {
   const { _id, name } = props.category;
   const title = props.title;
 
+  // 카테고리 번들 타이틀에따라 URL을 세분화해서 할당
   let linkTag = "";
   if (title === "WINE") {
     linkTag = `/category/types/${name}`;

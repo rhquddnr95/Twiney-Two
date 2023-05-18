@@ -1,9 +1,14 @@
 import BuyerInfo from "../../order/buyer-info";
 import BuyerPay from "../../order/buyer-pay";
 
+/** 주문내역 상세보기 컴포넌트 (아직 미구현 상태)*/
 const OrderedItemDetail = () => {
+  
+  /** 주문 취소 버튼 핸들러 */
   const orderCancelHandler = () => {};
+  /** 주문 하기 버튼 핸들러 */
   const orderCompleteHandler = () => {};
+
   return (
     <>
       <div className="flex flex-col items-center">

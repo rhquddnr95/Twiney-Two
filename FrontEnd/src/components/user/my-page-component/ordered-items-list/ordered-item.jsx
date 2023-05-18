@@ -1,11 +1,15 @@
 import { useQuery } from "react-query";
-import { getOrderByOrderIndex } from "../../../../api/api-order";
 import { getProductById } from "../../../../api/api-product";
 
+/** 주문 아이템(최소 자식 단위)에 대한 컴포넌트 prop로 [상품id, 수량]을 받음*/
 const OrderedItem = (props) => {
+  
+  /** 주문 아이템의 주문번호 */
   const productId = props.productId;
+  /** 주문 아이템의 수량 */
   const amount = props.amount;
 
+  // 유즈쿼리로 주문번호를 통해 데이터를 받아옴 data에는 상품 이미지, 상품 이름 받아옴
   const { data, isLoading, isError, error } = useQuery(
     ["product", productId],
     async () => await getProductById(productId)
@@ -25,7 +29,8 @@ const OrderedItem = (props) => {
               ></img>
             </div>
             <span className="w-[100%] text-2xl">
-              {data?.name}, {amount}병{/* 상품명, 상품개수 */}
+              {/* 상품명, 상품개수 */}
+              {data?.name}, {amount}병
             </span>
           </div>
         </div>
