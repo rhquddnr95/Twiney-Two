@@ -1,5 +1,6 @@
-import axios from "axios";
+import { axiosBaseWithToken } from "./api";
 
+/** 유저 ID에 해당하는 정보 수정 요청 */
 export const patchUserId = async (
   password,
   address1,
@@ -8,11 +9,7 @@ export const patchUserId = async (
   phoneNumber
 ) => {
   if (JSON.parse(localStorage.getItem("token"))) {
-    const result = await axios.patch("http://34.22.85.44:5000/api/users", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      },
+    const result = await axiosBaseWithToken.patch(`api/users`, {
       password,
       address1,
       address2,
