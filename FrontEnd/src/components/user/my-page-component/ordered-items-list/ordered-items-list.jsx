@@ -18,7 +18,7 @@ const OrderedItemsList = () => {
   // useContext로 auth-context.js 의 auth데이터를 가져옴
   const { auth } = useContext(authCtx);
 
-  // getOrdersByBuyerEmail로 주문내역 데이터를 orderList변수에 저장
+  // getOrdersByBuyerEmail로 주문내역 데이터를 가져옴
   const { data: orderList, isLoading } = useQuery(["orders", auth.email], () =>
     // 로그인 auth데이터가 있으면 email을 getOrdersByBuyerEmail api로 주문내역을 가져옴
     getOrdersByBuyerEmail(auth?.email)
