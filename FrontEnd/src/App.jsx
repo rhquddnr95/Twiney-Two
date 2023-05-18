@@ -19,7 +19,7 @@ import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page"
 import OrderPage from "./pages/user/order/order-page";
 import OrderCompletePage from "./pages/user/order/order-complete-page";
 import SignUpCompletePage from "./pages/auth/signup-complete-page";
-import AuthContex from "./components/store/auth-context";
+import AuthContext from "./components/store/auth-context";
 import Layout from "./components/Layout/layout";
 import OrderedItemsList from "./components/user/my-page-component/ordered-items-list/ordered-items-list";
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
@@ -33,7 +33,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <HashRouter>
-      <AuthContex>
+      <AuthContext>
         <CartContext>
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={true} />
@@ -131,7 +131,7 @@ function App() {
             </Layout>
           </QueryClientProvider>
         </CartContext>
-      </AuthContex>
+      </AuthContext>
     </HashRouter>
   );
 }

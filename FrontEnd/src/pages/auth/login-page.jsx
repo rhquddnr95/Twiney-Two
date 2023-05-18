@@ -6,7 +6,7 @@ import { authCtx } from "../../components/store/auth-context";
 
 const LoginPage = (props) => {
   // 로그인 여부 상태관리
-  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx);
+  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx)
   // 이메일 입력 상태관리
   const [email, setEmail] = useState("");
   // 패스워드 입력 상태관리
@@ -55,6 +55,8 @@ const LoginPage = (props) => {
           password,
         }
       );
+
+      // access token
       const token = response.data.userToken;
 
       // 아이디, 비밀번호가 일치해서 토큰이 정상적으로 발급된 경우 로그인 진행
