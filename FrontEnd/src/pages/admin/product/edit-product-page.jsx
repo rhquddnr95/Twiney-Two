@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../../api/api-product";
-import EditProduct from "../../../components/admin/product/edit-product";
+import ProductForm from "../../../components/admin/product/product-form";
 
 const EditProductPage = () => {
   const productId = useParams().product_id;
@@ -20,7 +20,7 @@ const EditProductPage = () => {
           Loading...
         </div>
       ) : !isError ? (
-        <EditProduct product={data} />
+        <ProductForm product={data} />
       ) : (
         <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
           {error.message}

@@ -1,3 +1,4 @@
+
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -31,6 +32,7 @@ const LoginPage = (props) => {
   const pwdInputHandler = (e) => {
     setPassword(e.target.value);
   };
+
 
   /** 입력값이 유효하면 제출버튼 활성화시켜주는 핸들러 함수 */
   const changeButtonHandler = () => {
@@ -71,6 +73,13 @@ const LoginPage = (props) => {
       return;
     }
   };
+
+  // 로그인된 상태면 메인페이지로 이동
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>

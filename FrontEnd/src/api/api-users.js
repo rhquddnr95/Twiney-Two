@@ -1,5 +1,6 @@
 import { axiosBaseWithToken } from "./api";
 
+/** 유저 ID에 해당하는 정보 수정 요청 */
 export const patchUserId = async (
   password,
   address1,
