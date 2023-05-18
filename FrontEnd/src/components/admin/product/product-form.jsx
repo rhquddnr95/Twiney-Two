@@ -1,14 +1,16 @@
 import { useRef, useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Button from "../../UI/button";
+import { useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { editProductById } from "../../../api/api-product";
-import { useQuery, useQueryClient } from "react-query";
 import { getAllCategories } from "../../../api/api-category";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ImageModal from "./image-modal";
+import Button from "../../UI/button";
 
-const EditProduct = (props) => {
+/** 상품 등록,수정시 입력하는 폼 컴포넌트 */
+const ProductForm = (props) => {
+  // 상품 등록시 필요한 카테고리 데이터 받아옴
   const { data: categoryBundle } = useQuery("categories", () =>
     getAllCategories()
   );
@@ -46,24 +48,25 @@ const EditProduct = (props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const imgRef = useRef();
-
   const productId = useParams().product_id;
 
+  // 카테고리 번들에서 와인 타입에 해당하는 카테고리들 변수에 담음
   const categoriesByType = categoryBundle?.find(
     (bundle) => bundle.title === "WINE"
   ).categories;
 
+  // 카테고리 번들에서 와인 생산국에 해당하는 카테고리들 변수에 담음
   const categoriesByCountry = categoryBundle?.find(
     (bundle) => bundle.title === "COUNTRY"
   ).categories;
 
-  // CK에디터 인풋 온채인지 핸들러
+  /** CK에디터 인풋 온채인지 핸들러 */
   const editorChangeHandler = (e, editor) => {
     const info = editor.getData();
     setInfo(info);
   };
 
-  // 폼 취소 핸들러
+  /** 폼 취소 핸들러 */
   const formCancleHandler = (e) => {
     e.preventDefault();
     if (window.confirm("정말로 취소하시겠습니까? 수정한 내용은 없어집니다.")) {
@@ -72,7 +75,7 @@ const EditProduct = (props) => {
     }
   };
 
-  // 폼 제출 핸들러
+  /** 폼 제출 핸들러 */
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     let arr = [];
@@ -101,7 +104,7 @@ const EditProduct = (props) => {
       },
     };
 
-    /* validation 부분 시간이 남으면 리팩토링이 필요함 */
+    // validation 부분 시간이 남으면 리팩토링이 필요함
     if (Object.values(data).filter((data) => data === null).length > 0) {
       alert("상품 정보를 빠짐없이 입력해주세요.");
       return;
@@ -124,8 +127,6 @@ const EditProduct = (props) => {
       return;
     }
 
-    // 이부분에 axios 구현
-
     try {
       await editProductById(productId, data);
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -134,11 +135,9 @@ const EditProduct = (props) => {
     } catch (error) {
       console.log(error);
     }
-
-    // navigate("/manage/product_list");
   };
 
-  // 이미지 추가 모달 핸들러
+  /** 이미지 추가 모달 핸들러 */
   const toggleImageModalHandler = (e) => {
     e.preventDefault();
     if (isImageModal) {
@@ -148,7 +147,7 @@ const EditProduct = (props) => {
     }
   };
 
-  // 이미지 파일 업로드 함수
+  /** 이미지 파일 업로드 함수 */
   const uploadImgFile = () => {
     const file = imgRef.current.files[0];
     const reader = new FileReader();
@@ -158,7 +157,7 @@ const EditProduct = (props) => {
     };
   };
 
-  // 이미지 추가 모달에서 이미지 칸으로 추가하는 핸들러
+  /** 이미지 추가 모달에서 이미지 칸으로 추가하는 핸들러 */
   const addImageHandler = (e) => {
     e.preventDefault();
     setImgUrl(imgFile);
@@ -463,4 +462,4 @@ export const CheckBoxDiv = (props) => {
   );
 };
 
-export default EditProduct;
+export default ProductForm;

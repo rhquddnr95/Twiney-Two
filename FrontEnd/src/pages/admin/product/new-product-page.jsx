@@ -1,9 +1,9 @@
-import NewProduct from "../../../components/admin/product/new-product";
+import ProductForm from "../../../components/admin/product/product-form";
 
 const NewProductPage = () => {
   return (
     <>
-      <NewProduct />
+      <ProductForm />
     </>
   );
 };
